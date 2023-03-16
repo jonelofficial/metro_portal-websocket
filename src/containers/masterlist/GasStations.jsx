@@ -31,8 +31,16 @@ import {
   columns,
   dropData,
 } from "../../utility/table-columns/gasStationColumns";
+import openSocket from "socket.io-client";
 
 const GasStations = () => {
+  useEffect(() => {
+    const io = openSocket(process.env.BASEURL);
+    io.on("gas-station", (data) => {
+      console.log(data);
+    });
+    return () => {};
+  }, []);
   // HOOKS
   const { refresh } = useRefresh();
   const { isOpen, onClose, onToggle } = useDisclosure();
